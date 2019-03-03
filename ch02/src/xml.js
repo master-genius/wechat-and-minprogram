@@ -8,11 +8,7 @@ var xml_text = `
     </xml>
 `;
 
-/*
-    默认情况explicitArray为true，这会把单个字段数据解析为数组，
-    使用比较麻烦。
-*/
-
+//可以把explicitArray 改成 true查看结果
 xmlparse(xml_text, {explicitArray : false}, (err, result) => {
     if (err) {
         console.log(err);
