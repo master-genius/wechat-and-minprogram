@@ -135,7 +135,7 @@ ant.post('/wx/talk', async (rr) => {
         parsexml(rr.req.GetBody(), {explicitArray : false}, (err, result) => {
             if (err) {
                 rr.res.Body = '';
-                throw err;
+                rj(err);
             } else {
                 var xmlmsg = result.xml;
                 var retmsg = {
