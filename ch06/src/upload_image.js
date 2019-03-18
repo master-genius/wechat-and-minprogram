@@ -13,6 +13,11 @@ wxcall.getToken()
 
     var upload_api = `https://api.weixin.qq.com/cgi-bin/material/add_material?access_token=${ret.data}&type=image`;
 
+    /** 
+     * awyhttp上传文件接受两个参数，第一个是请求URL，
+     * 第二个是选项，对于上传文件来说，默认就是POST请求，
+     * 需要设置file表示文件的路径，upload_name表示上传文件name属性名。
+    */
     return awyhttp.upload(upload_api, {
         file : image_path,
         upload_name : 'media'
