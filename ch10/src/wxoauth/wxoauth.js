@@ -1,9 +1,10 @@
 const awy = require('awy');
-const mysql = require('mysql');
 const fs = require('fs');
 const awyhttp = require('awyhttp');
 const ejs = require('ejs');
 const wxkey = require('./weixinkey.js');
+
+//请先运行npm i awy获取更新
 
 var ant = new awy();
 
@@ -16,7 +17,7 @@ ant.config.daemon = true;
  * */
 ant.config.pid_file = './weixin_oauth.pid';
 
-//请填写你自己的URL
+//请填写你自己的URL，此URL是对接微信的域名
 user_host = '';
 
 //处理静态请求
@@ -48,6 +49,7 @@ ant.get('/wx/oauth/code', async rr => {
 
 //微信授权：获取用户信息
 ant.get('/wx/oauth/login', async rr => {
+
     var oauth_token_api = 'https://api.weixin.qq.com/sns/oauth2/access_token'
         + '?appid=' + wxkey.appid
         + '&secret=' + wxkey.appsecret
@@ -86,6 +88,7 @@ ant.get('/wx/oauth/login', async rr => {
         );
 
         rr.res.Body = await new Promise ((rv, rj) => {
+                //使用ejs渲染模板文件
                 ejs.renderFile('pages/oauth.html', 
                     {user : udata},
                     (err, data) => {
@@ -103,6 +106,8 @@ ant.get('/wx/oauth/login', async rr => {
 
 });
 
-
+/*
+    请把8200换成自己的端口号，2表示创建两个子进程处理请求，默认会根据CPU核心数量创建。
+*/
 ant.ants('127.0.0.1', 8200, 2);
 
